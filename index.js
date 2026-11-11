@@ -31,13 +31,15 @@ function validateTermDepositInputs({ principal, interestRate, termYears, frequen
 }
 
 function calculateTermDeposit({ principal, interestRate, termYears, frequency }) {
+  
+  validateTermDepositInputs({ principal, interestRate, termYears, frequency });
+
   const normalizedFreq = frequency.trim().toLowerCase();
   const timesPerYear = PAYMENT_FREQUENCIES[normalizedFreq];
 
   const rateDecimal = interestRate / 100;
   let finalBalance;
   
-  validateTermDepositInputs({ principal, interestRate, termYears, frequency });
 
   if (timesPerYear === 0) {    
     finalBalance = principal * (1 + rateDecimal * termYears);
@@ -57,3 +59,5 @@ function calculateTermDeposit({ principal, interestRate, termYears, frequency })
 
 
 console.log( calculateTermDeposit({principal: 10000, interestRate: 1.10, termYears: 3, frequency: 'monthly'}) );
+
+// { "finalBalance": 10335, "totalInterest": 335 }
